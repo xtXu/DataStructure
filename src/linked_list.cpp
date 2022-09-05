@@ -7,16 +7,14 @@ struct Node {
   Node* link;
 };
 
-struct Node* head;  // global variable, can be accessed anywhere
-
-void insert(int x) {
+void insert(Node** head, int x) {
   Node* temp = new Node;
   temp->data = x;
-  temp->link = head;
-  head = temp;
+  temp->link = *head;
+  *head = temp;
 }
 
-void print() {
+void print(Node* head) {
   Node* temp = head;
   cout << "List is: ";
   while (temp != NULL) {
@@ -27,15 +25,15 @@ void print() {
 }
 
 int main(int, char**) {
-  head = NULL;  // empty list
+  Node* head = NULL;  // empty list
   int n, x;
   cout << "How many numbers ?" << endl;
   cin >> n;
   for (int i = 0; i < n; i++) {
     cout << "Enter the number" << endl;
     cin >> x;
-    insert(x);
-    print();
+    insert(&head, x);
+    print(head);
   }
   return 0;
 }
