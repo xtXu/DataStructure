@@ -50,3 +50,6 @@ Cost in terms of times:
 |   memory usage    |             -fixed size,<br>-may not be available as one large block              | -No unused memory, extra for pointer<br>-available as multiple small blocks |
 | cost of inserting | -beginning, $O(n)$<br>-end, $O(1)$(not full) or $O(n)$(full)<br>-$i^{th}$, $O(n)$ |           -beginning, $O(1)$<br>-end, $O(n)$<br>-$i^{th}$, $O(n)$           |
 |    easy of use    |                                :heavy_check_mark:                                 |                                     :x:                                     |
+
+## Linked list - Implementation in C/C++
+![](img/2022-09-05_10-18.png)
