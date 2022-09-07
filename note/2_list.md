@@ -16,7 +16,7 @@
 + specity data-type
 
 ## Dynamic List using Array
-![](img/2022-09-02_17-29.png)  
+![](img/2022-09-07_12-09.png)  
 What can we do if the array is full?
 + creat a new larger array of double size
 + copy previous array into the new array
@@ -29,7 +29,7 @@ Cost in terms of times:
 4. Add(insert at the end) - $O(1)$ if not full, $O(n)$ if full
 
 ## Linked list
-![](img/2022-09-02_18-18.png)
+![](img/2022-09-07_12-10.png)
 ```c++
 struct Node {
   int data;
@@ -53,3 +53,118 @@ Cost in terms of times:
 
 ## Linked list - Implementation in C/C++
 ![](img/2022-09-05_10-18.png)
+
+### struct
+```c++
+struct Node {
+  int data;
+  Node* link;
+};
+```
+### print (use head pointer as parameter)
+```c++
+void print(Node* head) {
+  Node* temp = head;
+  cout << "List is: ";
+  while (temp != NULL) {
+    cout << temp->data << " ";
+    temp = temp->link;
+  }
+  cout << endl;
+}
+```
+
+### Inserting a node at beginning
+**head pointer as global var**
+```c++
+Node* head;
+void insert(int x) {
+  Node* temp = new Node;
+  temp->data = x;
+  temp->link = head;
+  head = temp;
+}
+int main() {
+  head = NULL; //empty list
+  int x = 1;
+  insert(x);
+  return 0;
+}
+```
+**head pointer as function parameter**
+```c++
+Node* insert(Node* head, int x) {
+  Node* temp = new Node;
+  temp->data = x;
+  temp->link = head;
+  head = temp;
+  return head;
+}
+int main(int, char**) {
+  Node* head = NULL;  // empty list
+  int x = 1;
+  head = insert(head, x);
+  return 0;
+}
+```
+**head reference as function parameter**
+```c++
+void insert(Node** head, int x) {
+  Node* temp = new Node;
+  temp->data = x;
+  temp->link = *head;
+  *head = temp;
+}
+int main(int, char**) {
+  Node* head = NULL;  // empty list
+  int x = 1;
+  insert(&head, x);
+  return 0;
+}
+```
+
+### Inserting a node at $n^{th} position
+![](img/2022-09-07_12-06.png)  
+#### memory allocation: 
+**Code(Text):** store all the instructions that used to be executed.  
+**Static/Global:** store the global variables that live for the entire lifetime of the program/application.  
+**Stack:** store all the information about function call executions, to store all the local variables.  
+**Heap:** requst memory from it during run-time (new, melloc operator). 
+
+***Code, static and stack*** *sections are* ***fixed in size*** *that is decided at compile time,* ***heap*** *is* ***not fixed***.
+
+#### implementation
+```c++
+// n starts from 1
+void insert(int x, int n) {
+  Node* temp = new Node;
+  temp->data = x;
+  temp->link = NULL;
+  if (n == 1) {  // if insert at beginning
+    temp->link = head;
+    head = temp;
+    return;
+  }
+  Node* n_prev = head;
+  for (int i = 0; i < n - 2; i++) {
+    n_prev = n_prev->link;
+  }  //get the node before the inserting position
+  temp->link = n_prev->link;
+  n_prev->link = temp;
+}
+int main(int, char**) {
+  head = NULL;
+  /* inserting nth test */
+  insert(2, 1);
+  insert(3, 2);
+  insert(4, 1);
+  insert(5, 2);
+  print();
+  return 0;
+}
+```
+**memory allocation during `insert(3,2)`**  
+![](img/2022-09-07_12-01.png)
+
+**memory allocation during `print()`**  
+![](img/2022-09-07_12-05.png)
