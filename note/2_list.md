@@ -123,7 +123,7 @@ int main(int, char**) {
 }
 ```
 
-### Inserting a node at $n^{th} position
+### Inserting a node at $n^{th}$ position
 ![](img/2022-09-07_12-06.png)  
 #### memory allocation: 
 **Code(Text):** store all the instructions that used to be executed.  
@@ -168,3 +168,60 @@ int main(int, char**) {
 
 **memory allocation during `print()`**  
 ![](img/2022-09-07_12-05.png)
+
+### Delete a node at $n^{th}$ position
+![](img/2022-09-08_10-35.png)
+1. Fix hte links
+2. Free the space
+```c++
+// insert at end
+void push_back(int x) {
+  Node* temp = new Node;
+  temp->data = x;
+  temp->link = NULL;
+  if (head == NULL) {
+    head = temp;
+    return;
+  }
+  Node* last_node = head;
+  while (last_node->link != NULL) {
+    last_node = last_node->link;
+  }
+  last_node->link = temp;
+}
+// delete at nth
+void deleteAtN(int n) {
+  Node* n_prev = head;
+  if (n == 1) {
+    head = n_prev->link;
+    delete n_prev;
+    return;
+  }
+  for (int i = 0; i < n - 2; i++) {
+    n_prev = n_prev->link;
+  } //navigate to the (n-1)th node
+  Node* node_n = n_prev->link;
+  n_prev->link = node_n->link;
+  delete node_n;
+}
+int main(int, char**) {
+  // Node* head = NULL;  // empty list
+  head = NULL;
+
+  /* delete nth test */
+  push_back(2);
+  push_back(4);
+  push_back(6);
+  push_back(5);
+  cout << "before deleting: " << endl;
+  print();
+  cout << "enter a nth position to delete: ";
+  int n;
+  cin >> n;
+  deleteAtN(n);
+  cout << "after deleting: " << endl;
+  print();
+
+  return 0;
+}
+```

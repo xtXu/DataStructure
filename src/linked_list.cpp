@@ -52,6 +52,38 @@ void insert(int x, int n) {
   n_prev->link = temp;
 }
 
+// insert at end
+void push_back(int x) {
+  Node* temp = new Node;
+  temp->data = x;
+  temp->link = NULL;
+  if (head == NULL) {
+    head = temp;
+    return;
+  }
+  Node* last_node = head;
+  while (last_node->link != NULL) {
+    last_node = last_node->link;
+  }
+  last_node->link = temp;
+}
+
+// delete at nth
+void deleteAtN(int n) {
+  Node* n_prev = head;
+  if (n == 1) {
+    head = n_prev->link;
+    delete n_prev;
+    return;
+  }
+  for (int i = 0; i < n - 2; i++) {
+    n_prev = n_prev->link;
+  }
+  Node* node_n = n_prev->link;
+  n_prev->link = node_n->link;
+  delete node_n;
+}
+
 void print() {
   Node* temp = head;
   cout << "List is: ";
@@ -78,11 +110,26 @@ int main(int, char**) {
   // }
 
   /* inserting nth test */
-  insert(2, 1);
-  insert(3, 2);
-  insert(4, 1);
-  insert(5, 2);
+  // insert(2, 1);
+  // insert(3, 2);
+  // insert(4, 1);
+  // insert(5, 2);
+  // print();
+
+  /* delete nth test */
+  push_back(2);
+  push_back(4);
+  push_back(6);
+  push_back(5);
+  cout << "before deleting: " << endl;
   print();
+  cout << "enter a nth position to delete: ";
+  int n;
+  cin >> n;
+  deleteAtN(n);
+  cout << "after deleting: " << endl;
+  print();
+
   return 0;
 }
 
