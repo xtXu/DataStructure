@@ -73,6 +73,28 @@ void print(Node* head) {
   cout << endl;
 }
 ```
+### print using recursion
+![](img/2022-09-13_16-07.png)
+```c++
+// print using recursion
+void printRecursion(Node* p) {
+  if (p == NULL) {
+    cout << endl;
+    return;
+  }
+  cout << p->data << " ";
+  printRecursion(p->link);
+}
+```
+***Note: For normal print of the linked list, the iterative method is more efficient than the recursion method. Because in recursion, we will use space in the stack section of the memory for so many function calls.***
+```c++
+// print in reverse order using recursion
+void printReverse(Node* p) {
+  if (p == NULL) return;
+  printReverse(p->link);
+  cout << p->data << " ";
+}
+```
 
 ### Inserting a node at beginning
 **head pointer as global var**
@@ -84,12 +106,8 @@ void insert(int x) {
   temp->link = head;
   head = temp;
 }
-int main() {
-  head = NULL; //empty list
-  int x = 1;
-  insert(x);
-  return 0;
-}
+// example call
+insert(3);
 ```
 **head pointer as function parameter**
 ```c++
@@ -100,12 +118,8 @@ Node* insert(Node* head, int x) {
   head = temp;
   return head;
 }
-int main(int, char**) {
-  Node* head = NULL;  // empty list
-  int x = 1;
-  head = insert(head, x);
-  return 0;
-}
+// example call
+head = insert(head, x);
 ```
 **head reference as function parameter**
 ```c++
@@ -115,12 +129,8 @@ void insert(Node** head, int x) {
   temp->link = *head;
   *head = temp;
 }
-int main(int, char**) {
-  Node* head = NULL;  // empty list
-  int x = 1;
-  insert(&head, x);
-  return 0;
-}
+// example call
+insert(&head, x);
 ```
 
 ### Inserting a node at $n^{th}$ position
@@ -152,16 +162,8 @@ void insert(int x, int n) {
   temp->link = n_prev->link;
   n_prev->link = temp;
 }
-int main(int, char**) {
-  head = NULL;
-  /* inserting nth test */
-  insert(2, 1);
-  insert(3, 2);
-  insert(4, 1);
-  insert(5, 2);
-  print();
-  return 0;
-}
+// example call
+insert(2,1);
 ```
 **memory allocation during `insert(3,2)`**  
 ![](img/2022-09-07_12-01.png)
@@ -204,24 +206,44 @@ void deleteAtN(int n) {
   n_prev->link = node_n->link;
   delete node_n;
 }
-int main(int, char**) {
-  // Node* head = NULL;  // empty list
-  head = NULL;
+// example call
+deleteAtN(3);
+```
 
-  /* delete nth test */
-  push_back(2);
-  push_back(4);
-  push_back(6);
-  push_back(5);
-  cout << "before deleting: " << endl;
-  print();
-  cout << "enter a nth position to delete: ";
-  int n;
-  cin >> n;
-  deleteAtN(n);
-  cout << "after deleting: " << endl;
-  print();
-
-  return 0;
+### Reverse a linked list
+![](img/2022-09-13_15-19.png)
+#### Iterative method
+```c++
+// reverse iteratively
+void reverse() {
+  Node *prev, *current, *next;
+  prev = next = NULL;
+  current = head;
+  while (current != NULL) {
+    next = current->link;
+    current->link = prev;
+    prev = current;
+    current = next;
+  }
+  head = prev;
 }
+// example call
+reverse();
+```
+
+#### Recursion method
+```c++
+// reverse recursively
+void reverseRecursion(Node* p) {
+  if (p->link == NULL) {
+    head = p;
+    return;
+  }
+  reverseRecursion(p->link);
+  Node* next = p->link;
+  next->link = p;
+  p->link = NULL;
+}
+//example call
+reverseRecursion(p);
 ```

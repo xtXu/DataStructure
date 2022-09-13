@@ -84,6 +84,32 @@ void deleteAtN(int n) {
   delete node_n;
 }
 
+// reverse iteratively
+void reverse() {
+  Node *prev, *current, *next;
+  prev = next = NULL;
+  current = head;
+  while (current != NULL) {
+    next = current->link;
+    current->link = prev;
+    prev = current;
+    current = next;
+  }
+  head = prev;
+}
+
+// reverse recursively
+void reverseRecursion(Node* p) {
+  if (p->link == NULL) {
+    head = p;
+    return;
+  }
+  reverseRecursion(p->link);
+  Node* next = p->link;
+  next->link = p;
+  p->link = NULL;
+}
+
 void print() {
   Node* temp = head;
   cout << "List is: ";
@@ -92,6 +118,23 @@ void print() {
     temp = temp->link;
   }
   cout << endl;
+}
+
+// print using recursion
+void printRecursion(Node* p) {
+  if (p == NULL) {
+    cout << endl;
+    return;
+  }
+  cout << p->data << " ";
+  printRecursion(p->link);
+}
+
+// print in reverse order using recursion
+void printReverse(Node* p) {
+  if (p == NULL) return;
+  printReverse(p->link);
+  cout << p->data << " ";
 }
 
 int main(int, char**) {
@@ -117,17 +160,47 @@ int main(int, char**) {
   // print();
 
   /* delete nth test */
+  // push_back(2);
+  // push_back(4);
+  // push_back(6);
+  // push_back(5);
+  // cout << "before deleting: " << endl;
+  // print();
+  // cout << "enter a nth position to delete: ";
+  // int n;
+  // cin >> n;
+  // deleteAtN(n);
+  // cout << "after deleting: " << endl;
+  // print();
+
+  /* reverse test */
+  // push_back(2);
+  // push_back(4);
+  // push_back(6);
+  // push_back(5);
+  // cout << "before reverse : " << endl;
+  // print();
+  // reverse();
+  // cout << "after reverse : " << endl;
+  // print();
+
+  /* print using recursion test */
+  // push_back(2);
+  // push_back(4);
+  // push_back(6);
+  // push_back(5);
+  // printRecursion(head);
+  // printReverse(head);
+
+  /* reverse using recursion test */
   push_back(2);
   push_back(4);
   push_back(6);
   push_back(5);
-  cout << "before deleting: " << endl;
+  cout << "before reverse : " << endl;
   print();
-  cout << "enter a nth position to delete: ";
-  int n;
-  cin >> n;
-  deleteAtN(n);
-  cout << "after deleting: " << endl;
+  reverseRecursion(head);
+  cout << "after reverse : " << endl;
   print();
 
   return 0;
