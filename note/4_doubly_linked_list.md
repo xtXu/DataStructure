@@ -11,6 +11,20 @@ struct Node {
   Node* prev;
 };
 ```
+## Get a new node
+![](img/2022-09-14_11-58.png)
+In the implementation above, the stack frame of `GetNewNode()` will be reclaimed once the function finishes, so the memory of newNode that stay in stack section will be cleaned.
+
+We can implementate this way:
+```c++
+Node* GetNewNode(int x) {
+  Node* newNode = new Node;
+  newNode->data = x;
+  newNode->next = NULL;
+  newNode->prev = NULL;
+  return newNode;
+}
+```
 ## Insert at head
 ```c++
 void insertHead(int n) {
